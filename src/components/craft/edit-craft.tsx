@@ -73,8 +73,8 @@ export const EditCraftDialog = ({ craft }: EditCraftDialogProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button type="button" variant="outline" size="sm" className="h-9">
-          <Pencil className="mr-2 h-4 w-4" />
+        <Button type="button" variant="outline" size="sm" >
+          <Pencil />
           Edit
         </Button>
       </DialogTrigger>

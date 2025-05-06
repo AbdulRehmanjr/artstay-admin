@@ -12,12 +12,12 @@ export default function HomePage() {
         <div className="w-full md:w-1/2 mb-8 md:mb-0 text-center md:text-left">
           <div className="mb-4">
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-4">
-              Art<span className="text-foreground">stay</span>
+              Art<span className="text-secondary">stay</span>
             </h1>
-            <h2 className="text-xl md:text-2xl text-muted-foreground mb-6 font-text">
+            <h2 className="text-xl md:text-2xl text-primary mb-6 font-text">
               Professional Client Management Platform
             </h2>
-            <p className=" mb-8 max-w-md mx-auto md:mx-0 font-text">
+            <p className="text-primary mb-8 max-w-md mx-auto md:mx-0 font-text">
               Manage your clients, projects, and resources all in one place with our intuitive and secure dashboard.
             </p>
           </div>
@@ -30,7 +30,7 @@ export default function HomePage() {
                   <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
               </div>
-              <p className="text-sm text-foreground">Streamlined client management</p>
+              <p className="text-sm text-primary">Streamlined client management</p>
             </div>
             
             <div className="flex items-center gap-3">
@@ -41,7 +41,7 @@ export default function HomePage() {
                   <line x1="9" y1="21" x2="9" y2="9"></line>
                 </svg>
               </div>
-              <p className="text-sm text-foreground">Project tracking & reporting</p>
+              <p className="text-sm text-primary">Project tracking & reporting</p>
             </div>
             
             <div className="flex items-center gap-3">
@@ -50,7 +50,7 @@ export default function HomePage() {
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                 </svg>
               </div>
-              <p className="text-sm text-foreground">Enterprise-grade security</p>
+              <p className="text-sm text-primary">Enterprise-grade security</p>
             </div>
           </div>
         </div>
@@ -61,12 +61,12 @@ export default function HomePage() {
 
       <div className="absolute bottom-0 left-0 w-full py-4 bg-white/40 dark:bg-slate-900/40 backdrop-blur-sm font-text">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between text-sm text-muted-foreground">
+          <div className="flex flex-col md:flex-row items-center justify-between text-sm text-primary">
             <p>© {new Date().getFullYear()} Kolibri Business. All rights reserved.</p>
             <div className="flex gap-6 mt-2 md:mt-0">
-              <Link href="/terms" className="hover:text-primary transition-colors">Terms</Link>
-              <Link href="/privacy" className="hover:text-primary transition-colors">Privacy</Link>
-              <Link href="/help" className="hover:text-primary transition-colors">Support</Link>
+              <Link href="/terms" className="hover:text-secondary transition-colors">Terms</Link>
+              <Link href="/privacy" className="hover:text-secondary transition-colors">Privacy</Link>
+              <Link href="/help" className="hover:text-secondary transition-colors">Support</Link>
             </div>
           </div>
         </div>

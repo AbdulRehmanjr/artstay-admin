@@ -83,9 +83,9 @@ export const CraftList = () => {
               <div className="ml-auto flex gap-2">
                 <DeleteCraftDialog craft={craft} />
                 <EditCraftDialog craft={craft} />
-                <Button  size="sm" asChild>
+                <Button size="sm" asChild>
                   <Link href={`/admin/subcraft?craftId=${craft.craftId}`}>
-                    <Eye className="mr-2 h-4 w-4" />
+                    <Eye  />
                     View
                   </Link>
                 </Button>
