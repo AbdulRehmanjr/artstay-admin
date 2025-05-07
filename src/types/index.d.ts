@@ -81,3 +81,31 @@ type SafariProps = {
   description: string
   accountId: string
 }
+
+type FairProps = {
+  fairId: string;
+  firstName: string;
+  lastName: string;
+  dp: string;
+  address: string;
+  description: string;
+  isActive: boolean;
+  accountId: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+type TravelPlanerProps = {
+  travelPlanerId: string;
+  name: string;
+  dp: string;
+  description: string;
+  location: string;
+  priceRange: string;
+  language: string[];
+  speciality: string[];
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  accountId: string;
+};

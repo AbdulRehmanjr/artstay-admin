@@ -15,20 +15,20 @@ import { toast } from "sonner";
 import { api } from "~/trpc/react";
 
 type ComponentProps = {
-  safariId: string;
+  fairId: string;
   status: boolean;
 };
 
-export const SafariStatusDialog = ({ safariId, status }: ComponentProps) => {
+export const FairStatusDialog = ({ fairId, status }: ComponentProps) => {
   const utils = api.useUtils();
   const [open, setOpen] = useState<boolean>(false);
 
-  const toggleStatus = api.safari.toggleStatus.useMutation({
+  const toggleStatus = api.fair.toggleStatus.useMutation({
     onSuccess: async () => {
       toast("Status updated successfully", {
         className: "bg-green-500 text-white",
       });
-      await utils.safari.getAllSafaris.refetch();
+      await utils.fair.getAllFairs.refetch();
     },
     onError: () => {
       toast("Error updating status", {
@@ -38,7 +38,7 @@ export const SafariStatusDialog = ({ safariId, status }: ComponentProps) => {
   });
 
   const handleStatusChange = () => {
-    toggleStatus.mutate({ safariId, status: !status });
+    toggleStatus.mutate({ fairId, status: !status });
   };
 
   return (
@@ -50,9 +50,9 @@ export const SafariStatusDialog = ({ safariId, status }: ComponentProps) => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Toggle Safari Guide Status</DialogTitle>
+          <DialogTitle>Toggle Fair Organizer Status</DialogTitle>
           <DialogDescription>
-            Are you sure you want to change this safari guide&apos;s status to{" "}
+            Are you sure you want to change this fair organizer&apos;s status to{" "}
             <span className="font-medium">
               {status ? "inactive" : "active"}
             </span>

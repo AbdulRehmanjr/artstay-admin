@@ -82,19 +82,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           },
           {
             title: "Fairs Management",
-            url: "/dashboard/fairs",
+            url: "#",
             icon: Calendar,
-            isActive: pathname?.startsWith("/dashboard/fairs"),
+            isActive: pathname?.startsWith("/admin/fairs"),
             items: [
               {
                 title: "Fairs List",
-                url: "/dashboard/fairs/list",
-                isActive: pathname === "/dashboard/fairs/list",
+                url: "/admin/fairs",
+                isActive: pathname === "/admin/fairs",
               },
               {
                 title: "Add Fair",
-                url: "/dashboard/fairs/add",
-                isActive: pathname === "/dashboard/fairs/add",
+                url: "/admin/fairs/add",
+                isActive: pathname === "/admin/fairs/add",
               },
             ],
           },
@@ -135,24 +135,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             ],
           },
           {
-            title: "Room Management",
-            url: "/admin/rooms",
-            icon: Building,
-            isActive: pathname?.startsWith("/admin/rooms"),
-            items: [
-              {
-                title: "Room List",
-                url: "/admin/rooms/list",
-                isActive: pathname === "/admin/rooms/list",
-              },
-              {
-                title: "Add Room",
-                url: "/admin/rooms/add",
-                isActive: pathname === "/admin/rooms/add",
-              },
-            ],
-          },
-          {
             title: "Restaurant Management",
             url: "/admin/restaurants",
             icon: Building,
@@ -178,8 +160,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             items: [
               {
                 title: "Travel Plans",
-                url: "/admin/travel/plans",
-                isActive: pathname === "/admin/travel/plans",
+                url: "/admin/travel",
+                isActive: pathname === "/admin/travel   ",
               },
               {
                 title: "Add Plan",

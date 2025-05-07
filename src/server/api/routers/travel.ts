@@ -5,13 +5,11 @@ import { z } from "zod";
 
 
 
+export const travelRouter = createTRPCRouter({
 
-
-export const safariRouter = createTRPCRouter({
-
-    getAllSafaris: protectedProcedure.query(async () => {
+    getAllTravels: protectedProcedure.query(async () => {
         try {
-            const response = await axios.get<ApiResponse<SafariProps[]>>(`${env.SERVER_URL}/safari/all`);
+            const response = await axios.get<ApiResponse<TravelPlanerProps[]>>(`${env.SERVER_URL}/travel/all`);
             return response.data.data;
         } catch (error) {
 
@@ -20,14 +18,14 @@ export const safariRouter = createTRPCRouter({
                 throw new Error(error.message);
             }
             console.error(error);
-            throw new Error("Failed to fetch safaris");
+            throw new Error("Failed to fetch travel planners");
         }
     }),
     toggleStatus: protectedProcedure
-        .input(z.object({ safariId: z.string(), status: z.boolean() }))
+        .input(z.object({ travelPlanerId: z.string(), status: z.boolean() }))
         .mutation(async ({ input }) => {
             try {
-                const response = await axios.put<ApiResponse<null>>(`${env.SERVER_URL}/safari/toggle-status`, input);
+                const response = await axios.put<ApiResponse<null>>(`${env.SERVER_URL}/travel/toggle-status`, input);
                 return response.data.data;
             } catch (error) {
                 if (error instanceof AxiosError) {
