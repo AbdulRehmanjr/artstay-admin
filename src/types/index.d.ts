@@ -47,3 +47,65 @@ type SubCraftProps = {
   createdAt: Date;
   updatedAt: Date;
 }
+
+
+type ArtisanDetailProps = {
+  artisanId: string
+  firstName: string
+  lastName: string
+  address: string
+  description: string
+  experience: string
+  education: string
+  training: string
+  certificate: string
+  recongnition: string
+  craftId: string
+  subCraftId: string
+  dp: string
+  isActive: boolean;
+  craftId: string;
+  subCraftId: string;
+  accountId: string;
+  subCraft: SubCraftProps
+  craft: CraftProps
+}
+
+type SafariProps = {
+  safariId: string
+  firstName: string
+  lastName: string
+  dp: string
+  address: string
+  isActive: boolean
+  description: string
+  accountId: string
+}
+
+type FairProps = {
+  fairId: string;
+  firstName: string;
+  lastName: string;
+  dp: string;
+  address: string;
+  description: string;
+  isActive: boolean;
+  accountId: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+type TravelPlanerProps = {
+  travelPlanerId: string;
+  name: string;
+  dp: string;
+  description: string;
+  location: string;
+  priceRange: string;
+  language: string[];
+  speciality: string[];
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  accountId: string;
+};
