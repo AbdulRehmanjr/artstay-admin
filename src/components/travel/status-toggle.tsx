@@ -23,12 +23,12 @@ export const TravelPlanerStatusDialog = ({ travelPlanerId, status }: ComponentPr
   const utils = api.useUtils();
   const [open, setOpen] = useState<boolean>(false);
 
-  const toggleStatus = api.travelPlaner.toggleStatus.useMutation({
+  const toggleStatus = api.travel.toggleStatus.useMutation({
     onSuccess: async () => {
       toast("Status updated successfully", {
         className: "bg-green-500 text-white",
       });
-      await utils.travelPlaner.getAllTravels.refetch();
+      await utils.travel.getAllTravels.refetch();
     },
     onError: () => {
       toast("Error updating status", {

@@ -109,3 +109,32 @@ type TravelPlanerProps = {
   updatedAt: Date;
   accountId: string;
 };
+
+type RestaurantProps = {
+  restaurantId: string
+  name: string
+  description: string
+  location: string
+  cuisine: string[]
+  priceRange: string
+  image: string
+  rating: number
+  isActive: boolean
+  accountId: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+type LanguageServiceProps = {
+  languageServiceId: string;
+  name: string;
+  dp: string;
+  description: string;
+  languages: string[];
+  specialization: string[];
+  hourlyRate: number;
+  isActive: boolean;
+  accountId: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

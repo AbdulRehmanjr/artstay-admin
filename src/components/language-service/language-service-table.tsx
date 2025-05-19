@@ -42,7 +42,6 @@ import {
   ArrowUpDown,
   Download,
   MapPin,
-  Languages,
 } from "lucide-react";
 import { api } from "~/trpc/react";
 import { Badge } from "~/components/ui/badge";
@@ -59,18 +58,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { TravelPlanerStatusDialog } from "~/components/travel/status-toggle";
+import { LanguageServiceStatusDialog } from "~/components/language-service/status-toggle";
 
-
-const columns: ColumnDef<TravelPlanerProps>[] = [
+const columns: ColumnDef<LanguageServiceProps>[] = [
   {
-    accessorKey: "dp",
+    accessorKey: "profileImage",
     header: "Profile",
     cell: ({ row }) => (
       <div className="relative h-12 w-12 overflow-hidden rounded-lg border-2 border-white shadow-sm">
         <Image
-          src={row.original.dp == "" ? "/placeholder.png" : row.original.dp}
-          alt="travel planner profile"
+          src={row.original.dp || "/placeholder.png"}
+          alt="language service profile"
           fill
           className="object-cover transition-transform hover:scale-110"
           sizes="48px"
@@ -80,7 +78,7 @@ const columns: ColumnDef<TravelPlanerProps>[] = [
     enableSorting: false,
   },
   {
-    accessorKey: "name",
+    accessorKey: "profileName",
     header: ({ column }) => {
       return (
         <Button
@@ -97,20 +95,74 @@ const columns: ColumnDef<TravelPlanerProps>[] = [
       <div className="flex items-center gap-3">
         <div>
           <div className="font-semibold text-gray-900">
-            {row.getValue("name")}
+            {row.getValue("profileName")}
           </div>
           <div className="text-sm text-gray-500">
             {row.original.isActive ? (
               <span className="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset">
+                <span className="mr-1 h-1.5 w-1.5 rounded-full bg-green-600"></span>
                 Active
               </span>
             ) : (
               <span className="inline-flex items-center rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600/20 ring-inset">
+                <span className="mr-1 h-1.5 w-1.5 rounded-full bg-red-600"></span>
                 Inactive
               </span>
             )}
           </div>
         </div>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "languages",
+    header: "Languages",
+    cell: ({ row }) => {
+      const languages: string[] = row.getValue("languages");
+      return (
+        <div className="flex flex-wrap gap-1">
+          {languages.map((language, index) => (
+            <Badge key={index} className="bg-blue-100 text-blue-800 hover:bg-blue-200">
+              {language}
+            </Badge>
+          ))}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "specialization",
+    header: "Specialization",
+    cell: ({ row }) => {
+      const specializations: string[] = row.getValue("specialization");
+      return (
+        <div className="flex flex-wrap gap-1">
+          {specializations.map((specialization, index) => (
+            <Badge key={index} className="bg-purple-100 text-purple-800 hover:bg-purple-200">
+              {specialization}
+            </Badge>
+          ))}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "hourlyRate",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="-mx-2 h-8 px-2 font-medium"
+        >
+          Hourly Rate
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="flex items-center gap-1">
+        <span className="font-medium">${row.getValue("hourlyRate")}/hr</span>
       </div>
     ),
   },
@@ -145,90 +197,6 @@ const columns: ColumnDef<TravelPlanerProps>[] = [
     ),
   },
   {
-    accessorKey: "language",
-    header: "Languages",
-    cell: ({ row }) => {
-      const languages = row.original.language;
-      return (
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="flex items-center gap-1">
-                <Languages className="h-3.5 w-3.5 text-gray-500" />
-                <span className="max-w-[150px] truncate text-sm text-gray-600">
-                  {languages.length > 0 
-                    ? languages.join(", ") 
-                    : <span className="text-gray-400 italic">None specified</span>}
-                </span>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{languages.length > 0 ? languages.join(", ") : "No languages specified"}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      );
-    },
-  },
-  {
-    accessorKey: "priceRange",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="-mx-2 h-8 px-2 font-medium"
-        >
-          Price Range
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="text-sm text-gray-600">{row.getValue("priceRange")}</div>
-    ),
-  },
-  {
-    accessorKey: "description",
-    header: "Description",
-    cell: ({ row }) => (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <div className="max-w-[250px] truncate font-medium">
-              {row.getValue("description") ?? <span className="text-gray-400 italic">No description</span>}
-            </div>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>{row.getValue("description") ?? "No description provided"}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    ),
-  },
-  {
-    accessorKey: "isActive",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="-mx-2 h-8 px-2 font-medium"
-        >
-          Status
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      return (
-        <Badge variant={row.getValue("isActive") ? "default" : "destructive"}>
-          {row.getValue("isActive") ? "Active" : "Inactive"}
-        </Badge>
-      );
-    },
-  },
-  {
     id: "actions",
     header: () => <div className="text-center">Actions</div>,
     cell: ({ row }) => {
@@ -244,26 +212,33 @@ const columns: ColumnDef<TravelPlanerProps>[] = [
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-[180px]">
-              <DropdownMenuItem className="cursor-pointer gap-2">
-                <Eye className="h-4 w-4" />
-                View Profile
+            <DropdownMenuContent align="end" className="w-[200px]">
+              <div className="flex items-center justify-between px-2 py-1.5">
+                <span className="text-sm font-medium">Actions</span>
+                <Badge variant="outline" className="ml-auto">
+                  {row.original.isActive ? "Active" : "Inactive"}
+                </Badge>
+              </div>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="cursor-pointer gap-2 px-2 py-2">
+                <Eye className="h-4 w-4 text-gray-500" />
+                <span>View Profile</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer gap-2">
-                <Pen className="h-4 w-4" />
-                Edit Details
+              <DropdownMenuItem className="cursor-pointer gap-2 px-2 py-2">
+                <Pen className="h-4 w-4 text-gray-500" />
+                <span>Edit Details</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <TravelPlanerStatusDialog
-                  travelPlanerId={row.original.travelPlanerId}
+              <DropdownMenuItem asChild className="px-2 py-2">
+                <LanguageServiceStatusDialog
+                  languageServiceId={row.original.languageServiceId}
                   status={row.original.isActive}
                 />
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive cursor-pointer gap-2">
+              <DropdownMenuItem className="cursor-pointer gap-2 px-2 py-2 text-destructive focus:text-destructive">
                 <Trash2 className="h-4 w-4" />
-                Delete Travel Planner
+                <span>Delete Language Service</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -273,7 +248,7 @@ const columns: ColumnDef<TravelPlanerProps>[] = [
   },
 ];
 
-export const TravelPlanerTable = () => {
+export const LanguageServiceTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -283,10 +258,10 @@ export const TravelPlanerTable = () => {
   });
   const [globalFilter, setGlobalFilter] = useState("");
 
-  const [travelPlaners, { refetch }] = api.travel.getAllTravels.useSuspenseQuery();
+  const [languageServices, { refetch }] = api.languageService.getAllLanguageServices.useSuspenseQuery();
 
   const table = useReactTable({
-    data: travelPlaners ?? [],
+    data: languageServices ?? [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -312,10 +287,10 @@ export const TravelPlanerTable = () => {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-2xl font-bold text-gray-900">
-            Travel Planners Directory
+            Language Service Directory
           </h2>
           <p className="text-sm text-gray-500">
-            Manage and view all registered travel planners
+            Manage and view all registered language services
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -335,11 +310,11 @@ export const TravelPlanerTable = () => {
       </div>
 
       {/* Filters Section */}
-      <div className="flex flex-col items-center gap-4 sm:flex-row">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative max-w-sm flex-1">
           <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform" />
           <Input
-            placeholder="Search planners by name or location..."
+            placeholder="Search language services by name, languages, or location..."
             value={globalFilter ?? ""}
             onChange={(event) => setGlobalFilter(event.target.value)}
             className="h-10 border-gray-300 pl-10 focus:border-blue-500 focus:ring-blue-500"
@@ -398,7 +373,7 @@ export const TravelPlanerTable = () => {
       </div>
 
       {/* Table Section */}
-      <div className="overflow-hidden rounded-lg border border-gray-200 shadow-sm">
+      <div className="rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -450,7 +425,7 @@ export const TravelPlanerTable = () => {
                 >
                   <div className="flex flex-col items-center justify-center gap-2">
                     <Search className="h-8 w-8 text-gray-400" />
-                    <span className="text-gray-500">No travel planners found</span>
+                    <span className="text-gray-500">No language services found</span>
                     <span className="text-sm text-gray-400">
                       Try adjusting your search or filter
                     </span>
@@ -463,7 +438,7 @@ export const TravelPlanerTable = () => {
       </div>
 
       {/* Footer Section */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2">
           <p className="text-sm text-gray-700">
             Showing{" "}
@@ -511,4 +486,4 @@ export const TravelPlanerTable = () => {
       </div>
     </div>
   );
-};
+}; 

@@ -9,6 +9,8 @@ import {
   Map,
   type LucideIcon,
   Pickaxe,
+  Utensils,
+  Languages,
 } from "lucide-react";
 import { NavMain } from "~/components/sidebar/nav-menu";
 import {
@@ -29,6 +31,11 @@ type NavItem = {
   icon?: LucideIcon;
   isActive?: boolean;
   items?: {
+    title: string;
+    url: string;
+    isActive?: boolean;
+  }[];
+  subItems?: {
     title: string;
     url: string;
     isActive?: boolean;
@@ -135,24 +142,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             ],
           },
           {
-            title: "Restaurant Management",
-            url: "/admin/restaurants",
-            icon: Building,
-            isActive: pathname?.startsWith("/admin/restaurants"),
-            items: [
-              {
-                title: "Restaurant List",
-                url: "/admin/restaurants/list",
-                isActive: pathname === "/admin/restaurants/list",
-              },
-              {
-                title: "Add Restaurant",
-                url: "/admin/restaurants/add",
-                isActive: pathname === "/admin/restaurants/add",
-              },
-            ],
-          },
-          {
             title: "Travel Planning",
             url: "/admin/travel",
             icon: Map,
@@ -161,12 +150,48 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               {
                 title: "Travel Plans",
                 url: "/admin/travel",
-                isActive: pathname === "/admin/travel   ",
+                isActive: pathname === "/admin/travel",
               },
               {
                 title: "Add Plan",
                 url: "/admin/travel/add",
                 isActive: pathname === "/admin/travel/add",
+              },
+            ],
+          },
+          {
+            title: "Dining Voyage",
+            url: "/admin/dining-voyage",
+            icon: Utensils,
+            isActive: pathname?.startsWith("/admin/dining-voyage"),
+            items: [
+              {
+                title: "Dining List",
+                url: "/admin/dining-voyage",
+                isActive: pathname === "/admin/dining-voyage",
+              },
+              {
+                title: "Add Dining",
+                url: "/admin/dining-voyage/add",
+                isActive: pathname === "/admin/dining-voyage/add",
+              },
+            ],
+          },
+          {
+            title: "Language Service",
+            url: "/admin/language-service",
+            icon: Languages,
+            isActive: pathname?.startsWith("/admin/language-service"),
+            subItems: [
+              {
+                title: "Language List",
+                url: "/admin/language-service",
+                isActive: pathname === "/admin/language-service",
+              },
+              {
+                title: "Add Language",
+                url: "/admin/language-service/add",
+                isActive: pathname === "/admin/language-service/add",
               },
             ],
           },
@@ -301,7 +326,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
           case "TRAVEL_PLANER_ADMIN":
             items.push({
-              title: "Travel Planning",
+              title: "Travel Management",
               url: "/dashboard/travel",
               icon: Map,
               isActive: pathname?.startsWith("/dashboard/travel"),
@@ -309,12 +334,54 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 {
                   title: "Travel Plans",
                   url: "/dashboard/travel/plans",
-                  isActive: pathname === "/dashboard/travel/plans",
+                  isActive: pathname === "/dashboard/travel",
                 },
                 {
                   title: "Add Plan",
                   url: "/dashboard/travel/add",
                   isActive: pathname === "/dashboard/travel/add",
+                },
+              ],
+            });
+            break;
+
+          case "DINING_VOYAGE_ADMIN":
+            items.push({
+              title: "Dining Voyage Management",
+              url: "/dashboard/dining-voyage",
+              icon: Utensils,
+              isActive: pathname?.startsWith("/dashboard/dining-voyage"),
+              items: [
+                {
+                  title: "Dining List",
+                  url: "/dashboard/dining-voyage/list",
+                  isActive: pathname === "/dashboard/dining-voyage/list",
+                },
+                {
+                  title: "Add Dining",
+                  url: "/dashboard/dining-voyage/add",
+                  isActive: pathname === "/dashboard/dining-voyage/add",
+                },
+              ],
+            });
+            break;
+
+          case "LANGUAGE_SERVICE_ADMIN":
+            items.push({
+              title: "Language Service Management",
+              url: "/dashboard/language-service",
+              icon: Languages,
+              isActive: pathname?.startsWith("/dashboard/language-service"),
+              subItems: [
+                {
+                  title: "Language List",
+                  url: "/dashboard/language-service",
+                  isActive: pathname === "/dashboard/language-service",
+                },
+                {
+                  title: "Add Language",
+                  url: "/dashboard/language-service/add",
+                  isActive: pathname === "/dashboard/language-service/add",
                 },
               ],
             });

@@ -9,33 +9,35 @@ import {
 } from "~/components/ui/breadcrumb";
 import { api, HydrateClient } from "~/trpc/server";
 import { TableSkeleton } from "~/components/skeletons/table";
-import { TravelPlanerTable } from "~/components/travel/travel-table";
+import { DiningVoyageTable } from "~/components/dining-voyage/dining-voyage-table";
 
 export const metadata = {
-  title: "Artstay - TRAVEL PLANNER",
+  title: "Artstay - DINING VOYAGE",
 };
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic'
 
-export default function TravelPlanerPage() {
-  void api.travel.getAllTravels.prefetch();
+export default function DiningVoyagePage() {
+  void api.diningVoyage.getAllDiningVoyages.prefetch();
 
   return (
     <HydrateClient>
-      <Breadcrumb>
+      <div className="mb-6 space-y-4">
+        <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>Travel Planners</BreadcrumbPage>
+              <BreadcrumbPage>Dining Voyage</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-      <Suspense fallback={<TableSkeleton headers={['Profile','Name','Location','Languages','Price Range','Status','Action']} />}>
-        <TravelPlanerTable />
+      </div>
+      <Suspense fallback={<TableSkeleton headers={['Profile','Name','Cuisine','Location','Price Range','Rating','Actions']} />}>
+        <DiningVoyageTable />
       </Suspense>
     </HydrateClient>
   );
-}
+} 
